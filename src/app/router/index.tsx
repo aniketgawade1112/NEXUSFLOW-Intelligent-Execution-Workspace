@@ -1,10 +1,19 @@
 import { createBrowserRouter } from "react-router-dom";
+import SignInPage from "../../features/auth/components/SignInPage";
+import SignUpPage from "../../features/auth/components/SignUpPage";
+import { ProtectedRoute } from "../../features/auth/components/ProtectedRoute";
 
-const Page = ({ name }: { name: string }) => (
-  <div style={{ padding: 40 }}>{name}</div>
-);
+const Dashboard = () => <div style={{ padding: 40 }}>Dashboard</div>;
 
 export const router = createBrowserRouter([
-  { path: "/", element: <Page name="Dashboard" /> },
-  { path: "/tasks", element: <Page name="Tasks" /> },
+  {
+    path: "/",
+    element: (
+      <ProtectedRoute>
+        <Dashboard />
+      </ProtectedRoute>
+    ),
+  },
+  { path: "/sign-in", element: <SignInPage /> },
+  { path: "/sign-up", element: <SignUpPage /> },
 ]);

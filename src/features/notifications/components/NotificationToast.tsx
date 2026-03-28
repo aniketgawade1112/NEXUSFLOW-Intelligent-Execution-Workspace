@@ -1,32 +1,25 @@
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
+import { T } from "../../../lib/constants";
 
-type Props = {
-  message: string | null;
-};
-
-export function NotificationToast({ message }: Props) {
+export default function NotificationToast({ notification }: any) {
   return (
     <AnimatePresence>
-      {message && (
+      {notification && (
         <motion.div
-          initial={{ y: 50, opacity: 0 }}
+          initial={{ y: 60, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          exit={{ y: 50, opacity: 0 }}
+          exit={{ y: 60, opacity: 0 }}
           style={{
             position: "fixed",
-            bottom: 20,
-            right: 20,
-            background: "#111118",
-            border: "1px solid #F59E0B44",
-            color: "#F59E0B",
-            padding: "10px 14px",
-            borderRadius: 8,
-            fontSize: 13,
-            fontWeight: 600,
-            zIndex: 9999,
+            bottom: 24,
+            right: 24,
+            background: T.surface,
+            border: `1px solid ${T.warning}44`,
+            padding: "12px 18px",
+            borderRadius: 10,
           }}
         >
-          {message}
+          {notification.msg}
         </motion.div>
       )}
     </AnimatePresence>

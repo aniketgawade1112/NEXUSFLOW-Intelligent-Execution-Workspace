@@ -1,18 +1,29 @@
-import { useState } from "react";
-import type { ReactNode } from "react";
-import { Sidebar } from "./Sidebar";
+import Sidebar from "./Sidebar";
+import { T } from "../../lib/constants";
 
-type Props = {
-  children: ReactNode;
-};
-
-export const MainLayout = ({ children }: Props) => {
-  const [collapsed, setCollapsed] = useState(false);
-
+export default function MainLayout({
+  children,
+  view,
+  setView,
+  collapsed,
+  setCollapsed,
+}: any) {
   return (
-    <div style={{ display: "flex", height: "100vh" }}>
-      <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />
+    <div
+      style={{
+        background: T.bg,
+        color: T.text,
+        height: "100vh",
+        display: "flex",
+      }}
+    >
+      <Sidebar
+        active={view}
+        setActive={setView}
+        collapsed={collapsed}
+        setCollapsed={setCollapsed}
+      />
       <main style={{ flex: 1 }}>{children}</main>
     </div>
   );
-};
+}

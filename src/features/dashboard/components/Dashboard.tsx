@@ -1,42 +1,52 @@
+import { T } from "../../../lib/constants";
+import StatCard from "./StatCard";
+import RecentTasks from "./RecentTasks";
 import { useDashboardStats } from "../hooks/useDashboardStats";
-import { StatCard } from "./StatCard";
 
-export default function Dashboard() {
-  const stats = useDashboardStats();
-
-  if (stats.isLoading) {
-    return <div style={{ padding: 30 }}>Loading dashboard...</div>;
-  }
+export default function Dashboard({ tasks = [], expenses = [] }: any) {
+  const stats = useDashboardStats(tasks, expenses);
 
   return (
-    <div style={{ padding: 28 }}>
-      <h1 style={{ marginBottom: 20 }}>Dashboard</h1>
+    <div style={{ padding: "32px 36px" }}>
+      <h1 style={{ fontSize: 24 }}>Good morning 👋</h1>
 
       <div
         style={{
           display: "grid",
           gridTemplateColumns: "repeat(4,1fr)",
-          gap: 14,
+          gap: 16,
+          marginTop: 20,
         }}
       >
         <StatCard
           label="Total Tasks"
-          value={stats.totalTasks}
+          value={stats.total}
+          icon="tasks"
+          color={T.accent}
           sub={`${stats.completion}% complete`}
         />
-
         <StatCard
           label="In Progress"
-          value={stats.inProgress}
-          sub={`${stats.todo} todo`}
+          value={stats.inProg}
+          icon="target"
+          color={T.warning}
         />
-
-        <StatCard label="Completed" value={stats.completed} />
-
         <StatCard
-          label="Expenses"
-          value={`$${stats.totalExpense.toFixed(2)}`}
+          label="High Priority"
+          value={stats.important}
+          icon="fire"
+          color={T.danger}
         />
+        <StatCard
+          label="Monthly Spend"
+          value={`$${(stats?.totalExp ?? 0).toFixed(0)}`}
+          icon="expense"
+          color={T.success}
+        />
+      </div>
+
+      <div style={{ marginTop: 24 }}>
+        <RecentTasks tasks={stats?.recent ?? []} />
       </div>
     </div>
   );

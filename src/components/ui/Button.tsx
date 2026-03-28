@@ -1,47 +1,36 @@
 import { motion } from "framer-motion";
-import type { ReactNode, CSSProperties } from "react";
-import { T } from "../../styles/tokens";
+import { T } from "../../lib/constants";
+import Icon from "./Icon";
 
-type Variant = "primary" | "ghost" | "outline";
-
-type Props = {
-  children: ReactNode;
-  onClick?: () => void;
-  variant?: Variant;
-  style?: CSSProperties;
-};
-
-export const Button = ({
+export default function Button({
   children,
   onClick,
   variant = "primary",
-  style,
-}: Props) => {
-  const styles: Record<Variant, CSSProperties> = {
-    primary: { background: T.accent, color: "#fff", border: "none" },
-    ghost: { background: "transparent", color: T.muted, border: "none" },
-    outline: {
-      background: "transparent",
-      color: T.text,
-      border: `1px solid ${T.border}`,
-    },
+  icon,
+}: any) {
+  const styles: any = {
+    primary: { background: T.accent, color: "#fff" },
+    ghost: { background: "transparent", color: T.muted },
+    outline: { background: "transparent", border: `1px solid ${T.border}` },
   };
 
   return (
     <motion.button
       whileHover={{ scale: 1.02 }}
-      whileTap={{ scale: 0.98 }}
+      whileTap={{ scale: 0.97 }}
       onClick={onClick}
       style={{
         ...styles[variant],
+        border: "none",
         padding: "8px 14px",
         borderRadius: 8,
-        cursor: "pointer",
-        fontWeight: 600,
-        ...style,
+        display: "flex",
+        gap: 6,
+        alignItems: "center",
       }}
     >
+      {icon && <Icon name={icon} size={14} />}
       {children}
     </motion.button>
   );
-};
+}

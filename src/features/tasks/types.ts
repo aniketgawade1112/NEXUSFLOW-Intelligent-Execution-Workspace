@@ -11,3 +11,5 @@ export type Task = {
   due_date?: string;
   created_at: string;
 };
+
+export type TaskModalState = null | "new" | any;
